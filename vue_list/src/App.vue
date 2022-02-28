@@ -1,19 +1,13 @@
 <template>
-  <div>
-    <h1>Vue.js List</h1>
-    <TxtInput />
-    <UserList />
-  </div>
+  <SearchPage />
 </template>
 
 <script>
-import TxtInput from '@/components/TxtInput.vue'
-import UserList from '@/components/UserList.vue'
+import SearchPage from '@/views/SearchPage.vue'
 export default {
   name: 'App',
   components: {
-    TxtInput,
-    UserList
+    SearchPage
   }
 }
 </script>
