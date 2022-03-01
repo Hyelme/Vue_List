@@ -4,6 +4,7 @@
 
 <script>
 import SearchPage from '@/views/SearchPage.vue'
+
 export default {
   name: 'App',
   components: {
@@ -11,6 +12,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

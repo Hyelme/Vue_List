@@ -1,4 +1,4 @@
-# vue_list
+# vue_list_exam
 
 ## Project setup
 ```
