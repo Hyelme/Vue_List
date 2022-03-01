@@ -11,7 +11,9 @@
         <div class="listUserInfo">
           <div class="userName">{{user.login}}</div>
           <hr>
-          <div class="userPage">{{user.html_url}}</div>
+          <div class="userPage">
+            <a :href="user.html_url">{{user.html_url}}</a>
+          </div>
         </div>
       </div>
     </div>
