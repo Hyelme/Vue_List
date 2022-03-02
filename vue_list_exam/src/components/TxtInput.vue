@@ -1,23 +1,30 @@
 <template>
-  <div>
-      <input type="text" v-model="keyword" placeholder="user name" @keydown.enter="test">
-      <button @click="test">검색</button>
-  </div>
+    <v-col>
+        <v-text-field
+            v-model="keyword"
+            label="user name" 
+            :append-outer-icon="keyword?'mdi-send':''"
+            @keydown.enter="searchUserList"
+            @click:append-outer="searchUserList"
+        ></v-text-field>
+    </v-col>
 </template>
 
 <script>
-// import { getUserList } from '@/api/api'
 export default {
-    data() {
-        return {
-            keyword:''
+    computed: {
+        keyword: {
+            get() {
+                return this.$store.getters.fetchedKeyword
+            },
+            set(value) {
+                this.$store.commit('fetchKeyword', value)
+            }
         }
     },
     methods: {
-        test() {
-            this.$store.dispatch('getUserList', this.keyword);
-            //avatar_url : 프로필 이미지
-            //html_url : github url
+        searchUserList() {
+            this.$store.dispatch('getUserList');
         }
     },
 }
