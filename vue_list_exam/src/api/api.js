@@ -6,13 +6,13 @@ const header = {
     Authorization: "token " + process.env.VUE_APP_GITHUB_AUTH_TOKEN,
 };
 
-function getUserList(keyword) {
+function getUserList(keyword, perPage, nextPage) {
     return instance.get(`/search/users`, { 
                             headers: header, 
                             params: {
                                 q: keyword,
-                                per_page: 100,
-                                page: 1
+                                per_page: perPage,
+                                page: nextPage
                             }
                         });
 }

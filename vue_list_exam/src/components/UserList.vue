@@ -1,23 +1,30 @@
 <template>
-  <div class="userListContainer">
-    <div v-if="isEmptyList === true && totalCount === 0">
-      검색 결과가 없습니다.
-    </div>
-    <div v-else-if="isEmptyList === false && totalCount > 0">
-      <div v-for="(user, idx) in userList" :key="idx" class="listContainer">
-        <div class="listUserAvatarImg">
-          <img :src="user.avatar_url">
-        </div>
-        <div class="listUserInfo">
-          <div class="userName">{{user.login}}</div>
-          <hr>
-          <div class="userPage">
-            <a :href="user.html_url">{{user.html_url}}</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <v-list>
+    <template v-if="isEmptyList === false && totalCount > 0">
+      <v-virtual-scroll :items="userList" :item-height="70" height="500">
+        <template v-slot:default="{ index, item }">
+          <v-list-item :href="item.html_url">
+            <v-list-item-avatar>
+              <v-img :src="item.avatar_url"></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title v-html="item.login"></v-list-item-title>
+              <v-list-item-subtitle v-html="item.html_url"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider v-if="index < userList.length-1"></v-divider>
+        </template>
+      </v-virtual-scroll>
+      <!-- <infinite-loading
+        @infinite="infiniteScrollHandler" >
+      ></infinite-loading> -->
+    </template>
+    <template v-else-if="isEmptyList === true && totalCount === 0">
+      <v-list-item>
+        검색 결과가 없습니다.
+      </v-list-item>
+    </template>
+  </v-list>
 </template>
 
 <script>
@@ -29,46 +36,19 @@ export default {
       userList : 'fetchedUserInfo',
       isEmptyList: 'fetchedIsEmptyList',
       totalCount: 'fetchedTotalCount',
+      keyword: 'fetchedKeyword'
     })
   },
+  // methods: {
+  //   infiniteScrollHandler($state) {
+  //     this.$store.dispatch('getUserList');
+  //   }
+  // },
 }
 </script>
 
 <style>
-  hr {
-    width: 100%;
-  }
-
-  .userListContainer {
-    margin-top: 1rem;
-  }
-
-  .listContainer {
-    width: 450px;
-    position: relative;
-    border: 1px solid gray;
-    margin: 0.5rem 0;
-  }
-
-  .listUserAvatarImg {
-    width: 20%;
-    position: relative;
-    display: inline-block;
-  }
-
-  .listUserAvatarImg > img {
-    width: 100%;
-    position: relative;
-  }
-
-  .listUserInfo {
-    width: 79.5%;
-    display: inline-block;
-    position: absolute;
-  }
-
-  .listUserInfo > div {
-    font: 25px;
-    padding: 6px 10px;
+  .v-list-item__content {
+    margin-left: 0.5rem;
   }
 </style>
