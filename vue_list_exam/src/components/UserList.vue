@@ -9,46 +9,38 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title v-html="item.login"></v-list-item-title>
-              <v-list-item-subtitle v-html="item.html_url"></v-list-item-subtitle>
+              <v-list-item-subtitle
+                v-html="item.html_url"
+              ></v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-divider v-if="index < userList.length-1"></v-divider>
+          <v-divider v-if="index < userList.length - 1"></v-divider>
         </template>
       </v-virtual-scroll>
-      <!-- <infinite-loading
-        @infinite="infiniteScrollHandler" >
-      ></infinite-loading> -->
     </template>
     <template v-else-if="isEmptyList === true && totalCount === 0">
-      <v-list-item>
-        검색 결과가 없습니다.
-      </v-list-item>
+      <v-list-item> 검색 결과가 없습니다. </v-list-item>
     </template>
   </v-list>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   computed: {
     ...mapGetters({
-      userList : 'fetchedUserInfo',
-      isEmptyList: 'fetchedIsEmptyList',
-      totalCount: 'fetchedTotalCount',
-      keyword: 'fetchedKeyword'
-    })
+      userList: "fetchedUserInfo",
+      isEmptyList: "fetchedIsEmptyList",
+      totalCount: "fetchedTotalCount",
+      keyword: "fetchedKeyword",
+    }),
   },
-  // methods: {
-  //   infiniteScrollHandler($state) {
-  //     this.$store.dispatch('getUserList');
-  //   }
-  // },
-}
+};
 </script>
 
 <style>
-  .v-list-item__content {
-    margin-left: 0.5rem;
-  }
+.v-list-item__content {
+  margin-left: 0.5rem;
+}
 </style>

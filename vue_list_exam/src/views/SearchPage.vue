@@ -23,7 +23,6 @@ export default {
     },
     beforeCreate() {
         this.$store.commit('fetchPerPage', 20);
-        // this.$store.commit('fetchCurrentPage', 0);
     },
 }
 </script>

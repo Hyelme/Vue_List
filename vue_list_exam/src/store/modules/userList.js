@@ -1,12 +1,13 @@
 import { getUserList } from "@/api/api";
 
 const state = {
-    page:-1,
+    page: 1,
     perPage: 0,
-    totalPage:0,
+    totalPage: 0,
     totalCount: -1,
     isFirstPage: true,
-    isEmptyList: true,
+    isLastPage: false,
+    isEmptyList: false,
     userList: [],
     keyword: ''
 };
@@ -18,9 +19,11 @@ const mutations = {
     fetchUserInfo(state, userData) {
         state.userList = userData;
     },
+    fetchKeyword(state, keyword) {
+        state.keyword = keyword;
+    },
     fetchCurrentPage(state, curPage) {
         state.page = curPage;
-        console.log("store curPage : ", curPage);
     },
     fetchTotalCount(state, totalCount) {
         state.totalCount = totalCount;
@@ -29,32 +32,36 @@ const mutations = {
         state.totalPage = totalPage;
     },
     fetchPerPage(state, perPage) {
-        console.log("store perpage : ", perPage);
         state.perPage = perPage;
     },
     fetchIsFirstPage(state) {
-        state.isFirstPage = false;
+        state.isFirstPage = !state.isFirstPage;
+    },
+    fetchIsLastPage(state) {
+        state.isLastPage = !state.isLastPage;
+    },
+    fetchPagingInit(state){
+        state.isFirstPage = true;
+        state.isLastPage = false;
     },
     emptyList(state) {
         state.isEmptyList = true;
     },
     nonEmptyList(state) {
         state.isEmptyList = false;
-    },
-    fetchKeyword(state, keyword) {
-        state.keyword = keyword;
     }
 };
 
 const actions = {
-    async getUserList({ commit }) {
+    async getUserList({ commit , state }) {
 
-        if(state.page < state.totalPage) {
+        if(!state.isLastPage) {
             const response = await getUserList(state.keyword, state.perPage, state.page+1);
-            console.log("store api : ", response.data)
+        
             if(response.data.total_count === 0) {
                 commit('fetchListCount',response.data.total_count);
                 commit('emptyList');
+                commit('fetchPagingInit');
             }else {
                 if(state.isFirstPage) {
                     commit('fetchTotalPage', Math.round(response.data.total_count/state.perPage));
@@ -66,6 +73,7 @@ const actions = {
                 }
                 commit('fetchUserInfo',response.data.items);
                 commit('nonEmptyList');
+            
             }
         }
     }
