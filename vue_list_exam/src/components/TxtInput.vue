@@ -10,22 +10,26 @@
     </v-col>
 </template>
 
-<script>
-export default {
-    computed: {
-        keyword: {
-            get() {
-                return this.$store.getters.fetchedKeyword
-            },
-            set(value) {
-                this.$store.commit('fetchKeyword', value)
-            }
-        }
-    },
-    methods: {
-        searchUserList() {
-            this.$store.dispatch('getUserList');
-        }
-    },
-}
-</script>
+// <script lang="ts">
+// import Vue from 'vue';
+// import { Component } from 'vue-property-decorator'
+
+// @Component
+// export default class TxtInput extends Vue{
+//     computed: {
+//         keyword: {
+//             get():string {
+//                 return this.$store.getters.fetchedKeyword;
+//             },
+//             set(value):void {
+//                 this.$store.commit('fetchKeyword', value);
+//             }
+//         }
+//     },
+//     methods: {
+//         searchUserList(this:Vue):void {
+//             this.$store.dispatch('getUserList');
+//         }
+//     },
+// }
+// </script>
